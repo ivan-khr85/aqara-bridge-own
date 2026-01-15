@@ -1,5 +1,5 @@
 {
-  "domain": "aqara-bridge-own",
+  "domain": "aqara_bridge_own",
   "name": "Aqara Bridge own",
   "config_flow": true,
   "iot_class": "cloud_polling",
