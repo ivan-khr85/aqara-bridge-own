@@ -6,21 +6,13 @@ from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant.const import (
     # ATTR_BATTERY_LEVEL,
     # ATTR_TEMPERATURE,
-    CONDUCTIVITY,
     UnitOfEnergy,
     UnitOfTemperature,
     UnitOfPower,
     UnitOfPressure,
     LIGHT_LUX,
     PERCENTAGE,
-    CONCENTRATION_PARTS_PER_BILLION,
     CONCENTRATION_PARTS_PER_MILLION,
-    STATE_OPEN,
-    STATE_OPENING,
-    # STATE_CLOSED,
-    STATE_CLOSING,
-    STATE_LOCKED,
-    STATE_UNLOCKED
     )
 from homeassistant.components.sensor import SensorDeviceClass
 
