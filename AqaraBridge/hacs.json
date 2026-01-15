@@ -1,0 +1,5 @@
+{
+    "name": "Aqara Bridge",
+    "render_readme": true,
+    "domain": "aqara-bridge-own"
+}

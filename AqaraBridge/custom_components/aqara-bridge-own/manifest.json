@@ -1,0 +1,14 @@
+{
+  "domain": "aqara_bridge_own",
+  "name": "Aqara Bridge own",
+  "config_flow": true,
+  "iot_class": "cloud_polling",
+  "documentation": "",
+  "issue_tracker": "",
+  "requirements": [],
+  "dependencies": [],
+  "codeowners": [
+    "@ivan-khr85"
+  ],
+  "version": "v0.2.0"
+}
