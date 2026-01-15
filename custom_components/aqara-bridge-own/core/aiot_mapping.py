@@ -1,5 +1,4 @@
 from homeassistant.components.climate import ClimateEntityFeature
-from homeassistant.components.light import LightEntityFeature
 from homeassistant.components.cover import CoverEntityFeature
 from homeassistant.components.remote import RemoteEntityFeature
 from homeassistant.components.binary_sensor import BinarySensorDeviceClass
@@ -49,7 +48,7 @@ AIOT_DEVICE_MAPPING = [{
             "light": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "light",
-                    "supported_features": LightEntityFeature.BRIGHTNESS | LightEntityFeature.COLOR,
+                    "supported_features": 0,
                     "color_mode": "hs",
                 },
                 MK_RESOURCES: {
@@ -197,7 +196,7 @@ AIOT_DEVICE_MAPPING = [{
             "light": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "light",
-                    "supported_features": LightEntityFeature.BRIGHTNESS | LightEntityFeature.COLOR,
+                    "supported_features": 0,
                     "color_mode": "hs",
                 },
                 MK_RESOURCES: {
@@ -488,7 +487,7 @@ AIOT_DEVICE_MAPPING = [{
             "light": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "light",
-                    "supported_features": LightEntityFeature.BRIGHTNESS | LightEntityFeature.COLOR,
+                    "supported_features": 0,
                     "color_mode": "hs",
                 },
                 MK_RESOURCES: {
@@ -507,7 +506,7 @@ AIOT_DEVICE_MAPPING = [{
             "light": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "light",
-                    "supported_features": LightEntityFeature.BRIGHTNESS | LightEntityFeature.COLOR_TEMP,
+                    "supported_features": 0,
                     "color_mode": "hs",
                 },
                 MK_RESOURCES: {
@@ -525,7 +524,7 @@ AIOT_DEVICE_MAPPING = [{
             "light": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "light",
-                    "supported_features": LightEntityFeature.BRIGHTNESS | LightEntityFeature.COLOR,
+                    "supported_features": 0,
                     "color_mode": "hs",
                 },
                 MK_RESOURCES: {
@@ -544,7 +543,7 @@ AIOT_DEVICE_MAPPING = [{
             "light": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "light",
-                    "supported_features": LightEntityFeature.BRIGHTNESS | LightEntityFeature.COLOR,
+                    "supported_features": 0,
                     "color_mode": "hs",
                 },
                 MK_RESOURCES: {
