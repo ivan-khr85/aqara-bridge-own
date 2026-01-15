@@ -1,44 +1,18 @@
-from homeassistant.components.climate import TEMP_CELSIUS
-from homeassistant.components.light import (
-    SUPPORT_BRIGHTNESS,
-    SUPPORT_COLOR,
-    SUPPORT_COLOR_TEMP,
-)
-from homeassistant.components.cover import (
-    SUPPORT_CLOSE,
-    SUPPORT_OPEN,
-    SUPPORT_SET_POSITION,
-    SUPPORT_STOP,
-)
-from homeassistant.components.climate import (
-    SUPPORT_TARGET_TEMPERATURE,
-    SUPPORT_FAN_MODE,
-)
-from homeassistant.components.remote import SUPPORT_LEARN_COMMAND
-from homeassistant.components.binary_sensor import (
-    DEVICE_CLASS_DOOR,
-    DEVICE_CLASS_MOISTURE,
-    DEVICE_CLASS_MOTION
-)
+from homeassistant.components.climate import ClimateEntityFeature
+from homeassistant.components.light import LightEntityFeature
+from homeassistant.components.cover import CoverEntityFeature
+from homeassistant.components.remote import RemoteEntityFeature
+from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant.const import (
     # ATTR_BATTERY_LEVEL,
     # ATTR_TEMPERATURE,
     CONDUCTIVITY,
-    DEVICE_CLASS_BATTERY,
-    DEVICE_CLASS_ENERGY,
-    DEVICE_CLASS_HUMIDITY,
-    DEVICE_CLASS_ILLUMINANCE,
-    DEVICE_CLASS_POWER,
-    DEVICE_CLASS_PRESSURE,
-    DEVICE_CLASS_TEMPERATURE,
-    DEVICE_CLASS_CO2,
-    ENERGY_WATT_HOUR,
-    ENERGY_KILO_WATT_HOUR,
+    UnitOfEnergy,
+    UnitOfTemperature,
+    UnitOfPower,
+    UnitOfPressure,
     LIGHT_LUX,
     PERCENTAGE,
-    POWER_WATT,
-    PRESSURE_HPA,
-    TEMP_CELSIUS,
     CONCENTRATION_PARTS_PER_BILLION,
     CONCENTRATION_PARTS_PER_MILLION,
     STATE_OPEN,
@@ -48,13 +22,14 @@ from homeassistant.const import (
     STATE_LOCKED,
     STATE_UNLOCKED
     )
+from homeassistant.components.sensor import SensorDeviceClass
 
 try:
-    from homeassistant.const import DEVICE_CLASS_GAS
+    DEVICE_CLASS_GAS = SensorDeviceClass.GAS
 except:
     DEVICE_CLASS_GAS = "gas"
 try:
-    from homeassistant.const import DEVICE_CLASS_VOLATILE_ORGANIC_COMPOUNDS
+    DEVICE_CLASS_VOLATILE_ORGANIC_COMPOUNDS = SensorDeviceClass.VOLATILE_ORGANIC_COMPOUNDS
 except:
     DEVICE_CLASS_VOLATILE_ORGANIC_COMPOUNDS = "volatile_organic_compounds"
 
@@ -82,7 +57,7 @@ AIOT_DEVICE_MAPPING = [{
             "light": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "light",
-                    "supported_features": SUPPORT_BRIGHTNESS | SUPPORT_COLOR,
+                    "supported_features": LightEntityFeature.BRIGHTNESS | LightEntityFeature.COLOR,
                     "color_mode": "hs",
                 },
                 MK_RESOURCES: {
@@ -95,7 +70,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "illuminance",
-                    "device_class": DEVICE_CLASS_ILLUMINANCE,
+                    "device_class": SensorDeviceClass.ILLUMINANCE,
                     "state_class": "measurement",
                     "unit_of_measurement": LIGHT_LUX
                 },
@@ -120,7 +95,7 @@ AIOT_DEVICE_MAPPING = [{
             "remote": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "ir",
-                    "supported_features": SUPPORT_LEARN_COMMAND
+                    "supported_features": RemoteEntityFeature.LEARN_COMMAND
                 },
                 MK_RESOURCES: {
                     "irda": ("8.0.2092", "_attr_is_on"),
@@ -160,7 +135,7 @@ AIOT_DEVICE_MAPPING = [{
             "remote": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "ir",
-                    "supported_features": SUPPORT_LEARN_COMMAND
+                    "supported_features": RemoteEntityFeature.LEARN_COMMAND
                 },
                 MK_RESOURCES: {
                     "irda": ("8.0.2092", "_attr_is_on"),
@@ -230,7 +205,7 @@ AIOT_DEVICE_MAPPING = [{
             "light": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "light",
-                    "supported_features": SUPPORT_BRIGHTNESS | SUPPORT_COLOR,
+                    "supported_features": LightEntityFeature.BRIGHTNESS | LightEntityFeature.COLOR,
                     "color_mode": "hs",
                 },
                 MK_RESOURCES: {
@@ -243,7 +218,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "illuminance",
-                    "device_class": DEVICE_CLASS_ILLUMINANCE,
+                    "device_class": SensorDeviceClass.ILLUMINANCE,
                     "state_class": "measurement",
                     "unit_of_measurement": LIGHT_LUX
                 },
@@ -385,18 +360,18 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "power",
-                    "device_class": DEVICE_CLASS_POWER,
+                    "device_class": SensorDeviceClass.POWER,
                     "state_class": "measurement",
-                    "unit_of_measurement": POWER_WATT},
+                    "unit_of_measurement": UnitOfPower.WATT},
                 MK_RESOURCES: {"power": ("0.12.85", "_attr_native_value")}
             }
         }, {
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "energy",
-                    "device_class": DEVICE_CLASS_ENERGY,
+                    "device_class": SensorDeviceClass.ENERGY,
                     "state_class": "total_increasing",
-                    "unit_of_measurement": ENERGY_KILO_WATT_HOUR},
+                    "unit_of_measurement": UnitOfEnergy.KILO_WATT_HOUR},
                 MK_RESOURCES: {"energy": ("0.13.85", "_attr_native_value")},
             }
         }
@@ -439,18 +414,18 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "power",
-                    "device_class": DEVICE_CLASS_POWER,
+                    "device_class": SensorDeviceClass.POWER,
                     "state_class": "measurement",
-                    "unit_of_measurement": POWER_WATT},
+                    "unit_of_measurement": UnitOfPower.WATT},
                 MK_RESOURCES: {"power": ("0.12.85", "_attr_native_value")}
             }
         }, {
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "energy",
-                    "device_class": DEVICE_CLASS_ENERGY,
+                    "device_class": SensorDeviceClass.ENERGY,
                     "state_class": "total_increasing",
-                    "unit_of_measurement": ENERGY_KILO_WATT_HOUR},
+                    "unit_of_measurement": UnitOfEnergy.KILO_WATT_HOUR},
                 MK_RESOURCES: {"energy": ("0.13.85", "_attr_native_value")},
             }
         }
@@ -489,18 +464,18 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "power",
-                    "device_class": DEVICE_CLASS_POWER,
+                    "device_class": SensorDeviceClass.POWER,
                     "state_class": "measurement",
-                    "unit_of_measurement": POWER_WATT},
+                    "unit_of_measurement": UnitOfPower.WATT},
                 MK_RESOURCES: {"power": ("0.12.85", "_attr_native_value")}
             }
         }, {
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "energy",
-                    "device_class": DEVICE_CLASS_ENERGY,
+                    "device_class": SensorDeviceClass.ENERGY,
                     "state_class": "total_increasing",
-                    "unit_of_measurement": ENERGY_KILO_WATT_HOUR},
+                    "unit_of_measurement": UnitOfEnergy.KILO_WATT_HOUR},
                 MK_RESOURCES: {"energy": ("0.13.85", "_attr_native_value")},
             }
         }
@@ -521,7 +496,7 @@ AIOT_DEVICE_MAPPING = [{
             "light": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "light",
-                    "supported_features": SUPPORT_BRIGHTNESS | SUPPORT_COLOR,
+                    "supported_features": LightEntityFeature.BRIGHTNESS | LightEntityFeature.COLOR,
                     "color_mode": "hs",
                 },
                 MK_RESOURCES: {
@@ -540,7 +515,7 @@ AIOT_DEVICE_MAPPING = [{
             "light": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "light",
-                    "supported_features": SUPPORT_BRIGHTNESS | SUPPORT_COLOR_TEMP,
+                    "supported_features": LightEntityFeature.BRIGHTNESS | LightEntityFeature.COLOR_TEMP,
                     "color_mode": "hs",
                 },
                 MK_RESOURCES: {
@@ -558,7 +533,7 @@ AIOT_DEVICE_MAPPING = [{
             "light": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "light",
-                    "supported_features": SUPPORT_BRIGHTNESS | SUPPORT_COLOR,
+                    "supported_features": LightEntityFeature.BRIGHTNESS | LightEntityFeature.COLOR,
                     "color_mode": "hs",
                 },
                 MK_RESOURCES: {
@@ -577,7 +552,7 @@ AIOT_DEVICE_MAPPING = [{
             "light": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "light",
-                    "supported_features": SUPPORT_BRIGHTNESS | SUPPORT_COLOR,
+                    "supported_features": LightEntityFeature.BRIGHTNESS | LightEntityFeature.COLOR,
                     "color_mode": "hs",
                 },
                 MK_RESOURCES: {
@@ -598,9 +573,9 @@ AIOT_DEVICE_MAPPING = [{
             "climate": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "climate",
-                    "supported_features": SUPPORT_TARGET_TEMPERATURE | SUPPORT_FAN_MODE,
+                    "supported_features": ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.FAN_MODE,
                     "hvac_modes": ["cool", "heat", "off"],
-                    "unit_of_measurement": TEMP_CELSIUS,
+                    "unit_of_measurement": UnitOfTemperature.CELSIUS,
                     "target_temp_step": 1,
                     "fan_modes": ["low", "middle", "high"],
                     "min_temp": 16,
@@ -619,10 +594,10 @@ AIOT_DEVICE_MAPPING = [{
             "cover": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "cover",
-                    "supported_features": SUPPORT_OPEN
-                    | SUPPORT_CLOSE
-                    | SUPPORT_SET_POSITION
-                    | SUPPORT_STOP,
+                    "supported_features": CoverEntityFeature.OPEN
+                    | CoverEntityFeature.CLOSE
+                    | CoverEntityFeature.SET_POSITION
+                    | CoverEntityFeature.STOP,
                     "device_class": "curtain",
                 },
                 MK_RESOURCES: {
@@ -635,7 +610,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -661,7 +636,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -696,7 +671,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -721,7 +696,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -756,7 +731,7 @@ AIOT_DEVICE_MAPPING = [{
             "binary_sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "motion",
-                    "device_class": DEVICE_CLASS_MOTION
+                    "device_class": BinarySensorDeviceClass.MOTION
                 },
                 MK_RESOURCES: {
                     "motion": ("3.1.85", "_attr_native_value"),
@@ -771,7 +746,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -804,18 +779,18 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "power",
-                    "device_class": DEVICE_CLASS_POWER,
+                    "device_class": SensorDeviceClass.POWER,
                     "state_class": "measurement",
-                    "unit_of_measurement": POWER_WATT},
+                    "unit_of_measurement": UnitOfPower.WATT},
                 MK_RESOURCES: {"power": ("0.12.85", "_attr_native_value")}
             }
         }, {
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "energy",
-                    "device_class": DEVICE_CLASS_ENERGY,
+                    "device_class": SensorDeviceClass.ENERGY,
                     "state_class": "total_increasing",
-                    "unit_of_measurement": ENERGY_KILO_WATT_HOUR},
+                    "unit_of_measurement": UnitOfEnergy.KILO_WATT_HOUR},
                 MK_RESOURCES: {"energy": ("0.13.85", "_attr_native_value")},
             }
         }
@@ -828,7 +803,7 @@ AIOT_DEVICE_MAPPING = [{
             "binary_sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "motion",
-                    "device_class": DEVICE_CLASS_MOTION
+                    "device_class": BinarySensorDeviceClass.MOTION
                 },
                 MK_RESOURCES: {
                     "motion": ("3.1.85", "_attr_native_value"),
@@ -843,7 +818,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -858,7 +833,7 @@ AIOT_DEVICE_MAPPING = [{
             "binary_sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "motion",
-                    "device_class": DEVICE_CLASS_MOTION
+                    "device_class": BinarySensorDeviceClass.MOTION
                 },
                 MK_RESOURCES: {
                     "motion": ("3.1.85", "_attr_native_value"),
@@ -873,7 +848,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -883,7 +858,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "illuminance",
-                    "device_class": DEVICE_CLASS_ILLUMINANCE,
+                    "device_class": SensorDeviceClass.ILLUMINANCE,
                     "state_class": "measurement"
                 },
                 MK_RESOURCES: {"illuminance": ("0.3.85", "_attr_native_value")},
@@ -901,7 +876,7 @@ AIOT_DEVICE_MAPPING = [{
             "binary_sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "contact",
-                    "device_class": DEVICE_CLASS_DOOR
+                    "device_class": BinarySensorDeviceClass.DOOR
                 },
                 MK_RESOURCES: {
                     "status": ("3.1.85", "_attr_native_value"),
@@ -915,7 +890,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -931,7 +906,7 @@ AIOT_DEVICE_MAPPING = [{
             "binary_sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "motion",
-                    "device_class": DEVICE_CLASS_MOTION
+                    "device_class": BinarySensorDeviceClass.MOTION
                 },
                 MK_RESOURCES: {
                     "motion": ("3.1.85", "_attr_native_value"),
@@ -946,7 +921,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -962,7 +937,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -972,9 +947,9 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "temperature",
-                    "device_class": DEVICE_CLASS_TEMPERATURE,
+                    "device_class": SensorDeviceClass.TEMPERATURE,
                     "state_class": "measurement",
-                    "unit_of_measurement": TEMP_CELSIUS
+                    "unit_of_measurement": UnitOfTemperature.CELSIUS
                 },
                 MK_RESOURCES: {"temperature": ("'0.1.85", "_attr_native_value")},
             }
@@ -982,7 +957,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "humidity",
-                    "device_class": DEVICE_CLASS_HUMIDITY,
+                    "device_class": SensorDeviceClass.HUMIDITY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -999,7 +974,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -1009,9 +984,9 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "temperature",
-                    "device_class": DEVICE_CLASS_TEMPERATURE,
+                    "device_class": SensorDeviceClass.TEMPERATURE,
                     "state_class": "measurement",
-                    "unit_of_measurement": TEMP_CELSIUS
+                    "unit_of_measurement": UnitOfTemperature.CELSIUS
                 },
                 MK_RESOURCES: {"temperature": ("'0.1.85", "_attr_native_value")},
             }
@@ -1019,7 +994,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "humidity",
-                    "device_class": DEVICE_CLASS_HUMIDITY,
+                    "device_class": SensorDeviceClass.HUMIDITY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -1029,9 +1004,9 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "pressure",
-                    "device_class": DEVICE_CLASS_PRESSURE,
+                    "device_class": SensorDeviceClass.PRESSURE,
                     "state_class": "measurement",
-                    "unit_of_measurement": PRESSURE_HPA
+                    "unit_of_measurement": UnitOfPressure.HPA
                 },
                 MK_RESOURCES: {"pressure": ("0.3.85", "_attr_native_value")},
             }
@@ -1047,7 +1022,7 @@ AIOT_DEVICE_MAPPING = [{
             "binary_sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "moisture",
-                    "device_class": DEVICE_CLASS_MOISTURE
+                    "device_class": BinarySensorDeviceClass.MOISTURE
                 },
                 MK_RESOURCES: {
                     "moisture": ("3.1.85", "_attr_native_value"),
@@ -1061,7 +1036,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -1077,7 +1052,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "illuminance",
-                    "device_class": DEVICE_CLASS_ILLUMINANCE,
+                    "device_class": SensorDeviceClass.ILLUMINANCE,
                     "state_class": "measurement",
                     "unit_of_measurement": LIGHT_LUX
                 },
@@ -1087,7 +1062,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -1125,7 +1100,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -1168,7 +1143,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -1178,9 +1153,9 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "temperature",
-                    "device_class": DEVICE_CLASS_TEMPERATURE,
+                    "device_class": SensorDeviceClass.TEMPERATURE,
                     "state_class": "measurement",
-                    "unit_of_measurement": TEMP_CELSIUS
+                    "unit_of_measurement": UnitOfTemperature.CELSIUS
                 },
                 MK_RESOURCES: {"temperature": ("'0.1.85", "_attr_native_value")},
             }
@@ -1188,7 +1163,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "humidity",
-                    "device_class": DEVICE_CLASS_HUMIDITY,
+                    "device_class": SensorDeviceClass.HUMIDITY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -1224,7 +1199,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -1239,7 +1214,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "li_battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
@@ -1249,7 +1224,7 @@ AIOT_DEVICE_MAPPING = [{
             "sensor": {
                 MK_INIT_PARAMS: {
                     MK_HASS_NAME: "battery",
-                    "device_class": DEVICE_CLASS_BATTERY,
+                    "device_class": SensorDeviceClass.BATTERY,
                     "state_class": "measurement",
                     "unit_of_measurement": PERCENTAGE
                 },
