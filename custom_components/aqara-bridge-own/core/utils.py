@@ -6,7 +6,7 @@ from datetime import datetime
 from aiohttp import web
 
 from homeassistant.components.http import HomeAssistantView
-from homeassistant.helpers.typing import HomeAssistantType
+from homeassistant.core import HomeAssistant
 
 
 TITLE = "Aqara Bridge Debug"
@@ -24,7 +24,7 @@ class AqaraBridgeDebug(logging.Handler, HomeAssistantView):
 
     text = ''
 
-    def __init__(self, hass: HomeAssistantType):
+    def __init__(self, hass: HomeAssistant):
         super().__init__()
 
         # random url because without authorization!!!
